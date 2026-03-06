@@ -1,8 +1,12 @@
 import { CommandExecutor, Command, Commands } from "./services/command.js";
 import { TodoList } from "./services/todoList.js";
 import { LocalStorage } from "./services/storage.js";
+import {  Router } from "./services/router.js";
 
 globalThis.DOM = {};
+
+globalThis.app = {};
+app.router = Router;
 
 const DOM = globalThis.DOM;
 
@@ -78,4 +82,8 @@ document.addEventListener("DOMContentLoaded", () => {
       CommandExecutor.execute(cmd);
     }
   })
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  app.router.init();
 });
