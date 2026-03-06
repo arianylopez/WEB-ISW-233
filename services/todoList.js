@@ -35,7 +35,7 @@ export class TodoList {
 
     add(item) {
         const array = Array.from(this.#data);
-        const itemExists = array.filter(el => el.equals(item)).length > 1
+        const itemExists = array.filter(el => el.equals(item)).length > 0
         if(!itemExists) {
             this.#data.add(item);
             this.notify()
@@ -56,7 +56,7 @@ export class TodoList {
     }
 
     replaceList(list) {
-        this.#data = list;
+        this.#data = new Set(list);
         this.notify();
     }
 }

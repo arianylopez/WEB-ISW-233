@@ -2,6 +2,7 @@
 // EJECUTOR DEL COMANDO
 // ENUM 
 
+import { TodoHistory } from './memento.js';
 import { TodoList, TodoItem } from './todoList.js'
 export class Command {
     name;
@@ -14,7 +15,8 @@ export class Command {
 
 export const Commands = {
     ADD: "add",
-    DELETE: "delete"
+    DELETE: "delete",
+    UNDO: "undo"
 }
 
 export const CommandExecutor = {
@@ -25,14 +27,18 @@ export const CommandExecutor = {
                 const todoInput = globalThis.DOM.todoInput;
                 const todoText = todoInput.value.trim();
                 if(todoText != "") {
-                    todoList.add(TodoItem(todoText))
+                    todoList.add(new TodoItem(todoText)) // CAMBIO, agregando new 
                     todoInput.value = ""                
                 }
-                break
+                break;
             case Commands.DELETE:
-                command [textToDelete] = command.args
-                todoList.delete(textToDelete)
-                break 
+                const [textNode] = command.args;
+                todoList.delete(textNode);
+                break; 
+            case Commands.UNDO:
+                const todo = TodoHistory.pop();
+                todoList.replaceList(todo);
+                break;
         }
     }
 }
